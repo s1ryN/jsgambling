@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>GAMBA</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Latest compiled and minified CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <style>
+        body {
+            background-color: rgb(85, 85, 85);
+        }
+        .button {
+            margin-top: 1%;
+            height: 5%;
+        }
+        .number {
+            margin-top: 4%;
+            margin-bottom: 4%;
+        }
+        #counter {
+            margin-top: 2%;
+            padding-left: 1%;
+            padding-right: 1%;
+        }
+        h1{
+            margin-top: 10%;
+            margin-bottom: 0%;
+            font-size: 400%;
+        }
+        #sButton{
+            display: none;
+        }
+    </style>
+    <body>
+        <div class="d-flex justify-content-center">
+            <h1 class="text-center">GAMBLE WITH ME</h1>
+        </div>
+
+        <div id="gambus" class="border border-dark row h-100 d-flex align-items-center justify-content-center">
+            <div class="col-md-1">
+                <p id="left" class="number border border-danger text-center display-1">0</p>
+            </div>
+            <div class="col-md-1">
+                <p id="center" class="number border border-danger text-center display-1">0</p>
+            </div>
+            <div class="col-md-1">
+                <p id="right" class="number border border-danger text-center display-1">0</p>
+            </div>
+        </div>
+        <div class="button d-flex align-items-center justify-content-center">
+            <button id="gButton" onclick="gamble()" class="text-center btn btn-dark" aria-label="Start Gambling">$ GAMBLE $</button>
+        </div>
+        <div class="button h-100 d-flex align-items-center justify-content-center">
+            <button id="sButton" onclick="stop()" class="text-center btn btn-danger" aria-label="Stop Gambling">STOP</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <p id="counter" class="border border-secondary text-center display-6">Number of Wins: 0</p>
+        </div>
+
+    </body>
+    <script type="application/javascript">
+        var gButton = document.getElementById("gButton");
+        var sButton = document.getElementById("sButton");
+        var x = document.getElementById("gambus");
+        var array = [1, 2, 3]; // Declare globally
+        var wins = 0;
+        var leftNumber, centerNumber, rightNumber; // Declare these globally
+        var LNum, CNum, RNum;
+        var z = 5;
+
+        // Center the game on screen resize
+        window.addEventListener('resize', function () {
+            let height = window.innerHeight;
+            x.style.marginTop = height / z + "px";
+        });
+
+        // Initial centering
+        let height = window.innerHeight;
+        x.style.marginTop = height / z + "px";
+
+        // BUTTON GAMBLE
+        function gamble() {
+            gButton.style.display = "none";
+            sButton.style.display = "block";
+
+            // Set random speeds for the number changes
+            var leftSpeed = Math.floor(Math.random() * (40 - 1) + 1);
+            var centerSpeed = Math.floor(Math.random() * (40 - 1) + 1);
+            var rightSpeed = Math.floor(Math.random() * (40 - 1) + 1);
+
+            // Random character display
+            leftNumber = setInterval(function () {
+                let random = Math.floor(Math.random() * 3);
+                let number = document.getElementById("left");
+                number.innerHTML = array[random];
+                LNum = array[random];
+            }, leftSpeed);
+
+            centerNumber = setInterval(function () {
+                let random = Math.floor(Math.random() * 3);
+                let number = document.getElementById("center");
+                number.innerHTML = array[random];
+                CNum = array[random];
+            }, centerSpeed);
+
+            rightNumber = setInterval(function () {
+                let random = Math.floor(Math.random() * 3);
+                let number = document.getElementById("right");
+                number.innerHTML = array[random];
+                RNum = array[random];
+            }, rightSpeed);
+        }
+
+        // BUTTON STOP GAMBLE
+        function stop() {
+            clearInterval(leftNumber);
+            clearInterval(centerNumber);
+            clearInterval(rightNumber);
+
+            if (RNum === CNum && CNum === LNum) {
+                wins++;
+                let count = document.getElementById("counter");
+                count.innerHTML = "Number of Wins: " + wins;
+
+                let n1 = document.getElementById("left");
+                let n2 = document.getElementById("center");
+                let n3 = document.getElementById("right");
+                let elements = [n1, n2, n3, count];
+
+                // Flashing colors with a loop
+                flashColors(elements, "#00FF00", 200, 10);
+
+            } else {
+            gButton.style.display = "block";
+            sButton.style.display = "none";
+            }
+        }
+
+        // Helper function to flash elements with color
+        function flashColors(elements, color, interval, repetitions) {
+            for (let i = 0; i < repetitions; i++) {
+                setTimeout(() => {
+                    elements.forEach(el => el.style.color = (i % 2 === 0) ? color : "#000000");
+                }, i * interval);
+            }
+            setTimeout(function(){
+                sButton.style.display = "none";
+                gButton.style.display = "block";
+            },repetitions * interval)
+        }
+    </script>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>GAMBA</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+       <!-- Latest compiled and minified CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <style>
+        body{
+            background-color: rgb(85, 85, 85);
+        }
+        .button{
+            margin-top: 1%;
+            height: 5%;
+        }
+        .number{
+            margin-top: 4%;
+            margin-bottom: 4%;
+        }
+        #counter{
+            margin-top: 2%;
+            padding-left: 1%;
+            padding-right: 1%;
+        }
+
+    </style>
+    <body>
+        
+        <div id="gambus" class="border border-dark row h-100 d-flex align-items-center justify-content-center">
+            <div class="col-md-1 "><p id="left" class="number border border-danger text-center display-1">0</p></div>
+            <div class="col-md-1"><p id="center" class="number border border-danger text-center display-1">0</p></div>
+            <div class="col-md-1"><p id="right" class="number border border-danger text-center display-1">0</p></div>
+        </div>
+        <div class="button d-flex align-items-center justify-content-center">
+            <button id="gButton" onclick="gamble()" class="text-center btn btn-dark">GAMBLE</button>
+        </div>
+        <div id="sButton" class="button h-100 d-flex align-items-center justify-content-center">
+            <button onclick="stop()" class="text-center btn btn-danger">STOP</button>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <p id="counter" class="border border-secondary text-center display-6">Number of Wins: 0</p>
+        </div>
+
+
+    </body>
+    <script type="application/javascript">
+
+        var gButton = document.getElementById("gButton");
+        var x = document.getElementById("gambus");
+        var array = [1,2,3] //0-2
+        var wins=0;
+        var leftNumber, centerNumber, rightNumber, blink; // Declare these globally
+        var LNum, CNum, RNum;
+
+//height center
+heightCenter = setInterval(function(){
+            let height = window.innerHeight;
+            x.style.marginTop = height/4 + "px";
+        },1)
+
+//BUTTON GAMBLE
+function gamble(){
+    gButton.style.display = "none";
+    var gambleButton = document.getElementById
+    var speed = Math.floor(Math.random() * (40 - 10) +10);
+                                    //(max - min) + min
+//random character display
+        leftNumber = setInterval(function(){
+            let random = Math.floor(Math.random()*3);
+            let number = document.getElementById("left");
+            number.innerHTML = array[random];
+            LNum = array[random];
+        },speed)
+
+        centerNumber = setInterval(function(){
+            let random = Math.floor(Math.random()*3);
+            let number = document.getElementById("center");
+            number.innerHTML = array[random];
+            CNum = array[random];
+        },speed)
+
+        rightNumber = setInterval(function(){
+            let random = Math.floor(Math.random()*3);
+            let number = document.getElementById("right");
+            number.innerHTML = array[random];
+            RNum = array[random];
+        },speed)
+    }
+//BUTTON STOP GAMBLE
+function stop(){
+    clearInterval(leftNumber);
+    clearInterval(centerNumber);
+    clearInterval(rightNumber);
+
+    if(RNum == CNum && CNum == LNum){
+        wins++;
+
+        let count = document.getElementById("counter");
+        let n1 = document.getElementById("left");
+        let n2 = document.getElementById("center");
+        let n3 = document.getElementById("right");
+        count.innerHTML = "Number of Wins: " + wins;
+        
+        setTimeout(function(){
+            count.style.color = "#00FF00";
+            n1.style.color = "#00FF00";
+            n2.style.color = "#00FF00";
+            n3.style.color = "#00FF00";
+        },1)
+        setTimeout(function(){
+            count.style.color = "#000000";
+            n1.style.color = "#000000";
+            n2.style.color = "#000000";
+            n3.style.color = "#000000";
+        },201)
+
+        setTimeout(function(){
+            count.style.color = "#00FF00";
+            n1.style.color = "#00FF00";
+            n2.style.color = "#00FF00";
+            n3.style.color = "#00FF00";
+        },401)
+        setTimeout(function(){
+            count.style.color = "#000000";
+            n1.style.color = "#000000";
+            n2.style.color = "#000000";
+            n3.style.color = "#000000";
+        },601)
+
+        setTimeout(function(){
+            count.style.color = "#00FF00";
+            n1.style.color = "#00FF00";
+            n2.style.color = "#00FF00";
+            n3.style.color = "#00FF00";
+        },801)
+        setTimeout(function(){
+            count.style.color = "#000000";
+            n1.style.color = "#000000";
+            n2.style.color = "#000000";
+            n3.style.color = "#000000";
+        },1001)
+    }
+    gButton.style.display = "block";
+}
+
+    </script>
+</html>
